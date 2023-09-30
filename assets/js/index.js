@@ -48,8 +48,11 @@ function guardarPelicula() {
         console.log("Agregar pelicula");
         peliculas.push(pelicula);
     } else {
+        peliculas[indexEditar] = pelicula;
+        indexEditar = null;
         console.log("Editar pelicula");
     }
+    limpiarFormularioPeliculas();
     localStorage.setItem("peliculas", JSON.stringify(peliculas))
     console.log("Entro funcion guardar pelicula");
     mostrarPeliculas();
@@ -61,6 +64,26 @@ function borrarTodo() {
     peliculas = [];
     mostrarPeliculas();
     alert("Se borrraron las peliculas");
+}
+
+function editarPelicula(index) {
+    console.log("Entro editar pelicula:" + index);
+    let peliculaAEditar = peliculas[index];
+    console.log(peliculaAEditar, "peliculaAEditar");
+    inputTitulo.value = peliculaAEditar.titulo;
+    inputEstreno.value = peliculaAEditar.estreno;
+    inputGenero.value = peliculaAEditar.genero;
+    inputImagen.value = peliculaAEditar.imagen;
+    inputSinopsis.value = peliculaAEditar.sinopsis;
+    indexEditar = index;
+    // Reto: separa la funcionalidad de llenar el formulario a una funcion individual como lo hicimos con la de limpiarFormularioPeliculas
+}
+
+function eliminarPelicula(index) {
+    console.log("Entro elimnar pelicula:" + index);
+    peliculas.splice(index, 1);
+    localStorage.setItem("peliculas",JSON.stringify(peliculas));
+    mostrarPeliculas();
 }
 
 function mostrarPeliculas() {
@@ -98,6 +121,14 @@ function mostrarPeliculas() {
             `;
         });
     }
+}
+
+function limpiarFormularioPeliculas() {
+    inputTitulo.value = "";
+    inputEstreno.value = "";
+    inputGenero.value = "";
+    inputImagen.value = "";
+    inputSinopsis.value = "";
 }
 
 
